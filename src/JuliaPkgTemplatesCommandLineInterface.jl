@@ -24,4 +24,7 @@ include("config_manager.jl")
 # Include PluginDiscovery module
 include("plugin_discovery.jl")
 
+# Include TemplateManager module
+include("template_manager.jl")
+
 end

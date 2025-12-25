@@ -19,4 +19,5 @@ using Aqua
     include("test_types.jl")
     include("test_config_manager.jl")
     include("test_plugin_discovery.jl")
+    include("test_template_manager.jl")
 end

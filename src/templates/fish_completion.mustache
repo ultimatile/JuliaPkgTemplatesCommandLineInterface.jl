@@ -1,0 +1,23 @@
+# fish shell completion for jtc
+
+complete -c jtc -f -a "create config plugin-info completion"
+
+# create subcommand
+complete -c jtc -n "__fish_seen_subcommand_from create" -l author -d "Package author name"
+complete -c jtc -n "__fish_seen_subcommand_from create" -l user -d "GitHub username"
+complete -c jtc -n "__fish_seen_subcommand_from create" -l dry-run -d "Show what would be done"
+complete -c jtc -n "__fish_seen_subcommand_from create" -l with-mise -d "Generate mise configuration"
+
+# Dynamic plugin options
+{{#plugins}}
+complete -c jtc -n "__fish_seen_subcommand_from create" -l {{name}} -d "{{name}} plugin options"
+{{/plugins}}
+
+# config subcommand
+complete -c jtc -n "__fish_seen_subcommand_from config" -f -a "show set"
+
+# plugin-info subcommand
+complete -c jtc -n "__fish_seen_subcommand_from plugin-info" -f -a "{{#plugins}}{{name}} {{/plugins}}"
+
+# completion subcommand
+complete -c jtc -n "__fish_seen_subcommand_from completion" -f -a "fish"
