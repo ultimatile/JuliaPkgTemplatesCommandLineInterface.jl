@@ -16,4 +16,5 @@ using Aqua
     # Include test files
     include("test_project_setup.jl")
     include("test_errors.jl")
+    include("test_types.jl")
 end

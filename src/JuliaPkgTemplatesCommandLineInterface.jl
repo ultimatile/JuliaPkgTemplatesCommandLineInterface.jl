@@ -8,7 +8,14 @@ export ConfigurationError
 export TemplateGenerationError
 export PluginNotFoundError
 
+# Export common data structures
+export CommandResult
+export PluginDetails
+
 # Include error type definitions
 include("errors.jl")
+
+# Include common data structures
+include("types.jl")
 
 end
