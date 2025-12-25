@@ -92,4 +92,56 @@ using ArgParse
         @test settings.add_version == true
         @test settings.version != ""
     end
+
+    @testset "@main function - dispatch and error handling" begin
+        # Test dispatch_command function
+        @testset "dispatch_command - create command" begin
+            # Mock args for create command
+            args = Dict("package_name" => "TestPkg")
+            result = JuliaPkgTemplatesCommandLineInterface.dispatch_command("create", args)
+            @test result isa JuliaPkgTemplatesCommandLineInterface.CommandResult
+        end
+
+        @testset "dispatch_command - config command" begin
+            args = Dict{String, Any}()
+            result = JuliaPkgTemplatesCommandLineInterface.dispatch_command("config", args)
+            @test result isa JuliaPkgTemplatesCommandLineInterface.CommandResult
+        end
+
+        @testset "dispatch_command - plugin-info command" begin
+            args = Dict{String, Any}()
+            result = JuliaPkgTemplatesCommandLineInterface.dispatch_command("plugin-info", args)
+            @test result isa JuliaPkgTemplatesCommandLineInterface.CommandResult
+        end
+
+        @testset "dispatch_command - completion command" begin
+            args = Dict("shell" => "fish")
+            result = JuliaPkgTemplatesCommandLineInterface.dispatch_command("completion", args)
+            @test result isa JuliaPkgTemplatesCommandLineInterface.CommandResult
+        end
+
+        @testset "dispatch_command - unknown command error" begin
+            args = Dict{String, Any}()
+            @test_throws ErrorException JuliaPkgTemplatesCommandLineInterface.dispatch_command("unknown", args)
+        end
+    end
+
+    @testset "handle_error function" begin
+        # Test error message conversion
+        @testset "handle_error - JTCError types" begin
+            err = JuliaPkgTemplatesCommandLineInterface.PackageGenerationError("Test error")
+            result = JuliaPkgTemplatesCommandLineInterface.handle_error(err)
+            @test result isa JuliaPkgTemplatesCommandLineInterface.CommandResult
+            @test result.success == false
+            @test occursin("Test error", result.message)
+        end
+
+        @testset "handle_error - generic Exception" begin
+            err = ErrorException("Generic error")
+            result = JuliaPkgTemplatesCommandLineInterface.handle_error(err)
+            @test result isa JuliaPkgTemplatesCommandLineInterface.CommandResult
+            @test result.success == false
+            @test occursin("Generic error", result.message)
+        end
+    end
 end

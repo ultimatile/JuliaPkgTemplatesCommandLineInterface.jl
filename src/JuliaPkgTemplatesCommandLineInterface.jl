@@ -49,5 +49,7 @@ include("cli.jl")
 export create_argument_parser
 export add_dynamic_plugin_options!
 export get_version
+export dispatch_command
+export handle_error
 
 end

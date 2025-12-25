@@ -12,6 +12,8 @@ using ArgParse
 using PkgTemplates
 using TOML
 
+import Logging
+
 """
 Create ArgParse settings object with subcommand definitions
 
@@ -155,4 +157,113 @@ function get_version()::String
     project_file = joinpath(@__DIR__, "..", "Project.toml")
     project = TOML.parsefile(project_file)
     return get(project, "version", "unknown")
+end
+
+"""
+Command dispatch function - routes parsed arguments to appropriate command handlers
+
+# Arguments
+- `command::String`: The subcommand to execute (create, config, plugin-info, completion)
+- `args::Dict`: Parsed arguments specific to the subcommand
+
+# Returns
+- `CommandResult`: Result of command execution
+
+# Throws
+- `ErrorException`: If an unknown command is provided
+"""
+function dispatch_command(command::String, args::Dict)::CommandResult
+    if command == "create"
+        return CreateCommand.execute(args)
+    elseif command == "config"
+        return ConfigCommand.execute(args)
+    elseif command == "plugin-info"
+        return PluginInfoCommand.execute(args)
+    elseif command == "completion"
+        return CompletionCommand.execute(args)
+    else
+        error("Unknown command: $command")
+    end
+end
+
+"""
+Error handler - converts exceptions to user-friendly CommandResult
+
+# Arguments
+- `e::Exception`: The exception to handle
+
+# Returns
+- `CommandResult`: Error result with user-friendly message
+"""
+function handle_error(e::Exception)::CommandResult
+    if e isa JTCError
+        return CommandResult(
+            success = false,
+            message = string(e.message)
+        )
+    else
+        return CommandResult(
+            success = false,
+            message = "Unexpected error: $(sprint(showerror, e))"
+        )
+    end
+end
+
+# Main entry point for the jtc CLI application (Julia 1.12 Apps feature)
+#
+# Returns:
+# - Int: Exit code (0 for success, 1 for failure)
+#
+# Implementation Details:
+# - Configures ArgParse.jl settings and adds dynamic plugin options
+# - Parses command line arguments from ARGS
+# - Configures logging based on --verbose flag
+# - Dispatches to appropriate command handler
+# - Catches and handles all exceptions, converting to user-friendly messages
+function (@main)(ARGS)
+    try
+        # Create argument parser
+        settings = create_argument_parser()
+
+        # Add dynamic plugin options
+        add_dynamic_plugin_options!(settings)
+
+        # Parse arguments
+        parsed_args = ArgParse.parse_args(ARGS, settings)
+
+        # Configure logging based on verbose flag
+        if get(parsed_args, "verbose", false)
+            # Enable verbose logging (INFO and DEBUG messages)
+            Logging.global_logger(Logging.ConsoleLogger(stderr, Logging.Debug))
+        end
+
+        # Get the subcommand
+        command = get(parsed_args, "%COMMAND%", nothing)
+
+        if command === nothing
+            # No command specified, show help
+            ArgParse.show_help(settings)
+            return 0
+        end
+
+        # Dispatch to appropriate command handler
+        result = dispatch_command(command, parsed_args[command])
+
+        # Display result message if present
+        if result.message !== nothing
+            if result.success
+                Logging.@info result.message
+            else
+                Logging.@error result.message
+            end
+        end
+
+        return result.success ? 0 : 1
+
+    catch e
+        # Global error handler - catch any unhandled exceptions
+        result = handle_error(e)
+        Logging.@error result.message
+        return 1
+    end
 end
