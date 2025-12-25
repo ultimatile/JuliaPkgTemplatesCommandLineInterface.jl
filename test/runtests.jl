@@ -17,4 +17,5 @@ using Aqua
     include("test_project_setup.jl")
     include("test_errors.jl")
     include("test_types.jl")
+    include("test_config_manager.jl")
 end

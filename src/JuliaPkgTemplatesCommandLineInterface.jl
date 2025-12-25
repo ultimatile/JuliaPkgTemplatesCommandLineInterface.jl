@@ -18,4 +18,7 @@ include("errors.jl")
 # Include common data structures
 include("types.jl")
 
+# Include ConfigManager module
+include("config_manager.jl")
+
 end
