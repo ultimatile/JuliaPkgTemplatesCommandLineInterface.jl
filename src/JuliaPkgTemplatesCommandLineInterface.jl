@@ -30,4 +30,7 @@ include("template_manager.jl")
 # Include PackageGenerator module
 include("package_generator.jl")
 
+# Include CreateCommand module
+include("create_command.jl")
+
 end
