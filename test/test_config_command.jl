@@ -198,14 +198,14 @@ include("../src/types.jl")
                     "%SUBCOMMAND%" => "show"
                 )
 
-                # Capture output using pipe
-                read_pipe, write_pipe = Base.pipe()
-                result = redirect_stdout(write_pipe) do
+                # Capture output using Pipe
+                pipe = Pipe()
+                result = redirect_stdout(pipe) do
                     ConfigCommand.execute(args)
                 end
-                close(write_pipe)
-                output_str = read(read_pipe, String)
-                close(read_pipe)
+                close(pipe.in)
+                output_str = read(pipe.out, String)
+                close(pipe.out)
 
                 @test result.success == true
                 @test contains(output_str, "Show Test")
@@ -243,14 +243,14 @@ include("../src/types.jl")
 
                 args = Dict{String,Any}()  # No subcommand
 
-                # Capture output using pipe
-                read_pipe, write_pipe = Base.pipe()
-                result = redirect_stdout(write_pipe) do
+                # Capture output using Pipe
+                pipe = Pipe()
+                result = redirect_stdout(pipe) do
                     ConfigCommand.execute(args)
                 end
-                close(write_pipe)
-                output_str = read(read_pipe, String)
-                close(read_pipe)
+                close(pipe.in)
+                output_str = read(pipe.out, String)
+                close(pipe.out)
 
                 @test result.success == true
                 @test contains(output_str, "Default Show Test")
