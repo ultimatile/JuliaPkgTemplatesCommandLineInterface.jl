@@ -125,16 +125,5 @@ import JuliaPkgTemplatesCommandLineInterface.CreateCommand
         end
     end
 
-    @testset "execute" begin
-        @testset "dry-run mode has no side effects" begin
-            # This test will verify that dry-run doesn't create files
-            # We'll implement this after the basic execute() is working
-            @test_skip "Dry-run test pending"
-        end
-
-        @testset "error handling for missing package name" begin
-            # This test will verify proper error handling
-            @test_skip "Error handling test pending"
-        end
-    end
+    # Note: dry-run mode and error handling are tested in test_integration.jl
 end
