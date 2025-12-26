@@ -9,26 +9,22 @@ using Test
 using JuliaPkgTemplatesCommandLineInterface
 using PkgTemplates
 
-# Import PluginInfoCommand (will be defined in src/plugin_info_command.jl)
-include("../src/plugin_info_command.jl")
+# Access PluginInfoCommand through parent module
+const PluginInfoCommand = JuliaPkgTemplatesCommandLineInterface.PluginInfoCommand
 
-# Import types directly (these are already included in PluginInfoCommand)
-include("../src/types.jl")
-
-# Helper function for capturing stdout
+# Helper function for capturing stdout (same as test_integration.jl)
 function capture_stdout(f::Function)
     old_stdout = stdout
-    rd, wr = redirect_stdout()
+    (read_pipe, write_pipe) = redirect_stdout()
 
-    task = @async read(rd, String)
+    f()
 
-    try
-        f()
-        close(wr)
-        fetch(task)
-    finally
-        redirect_stdout(old_stdout)
-    end
+    redirect_stdout(old_stdout)
+    close(write_pipe)
+    output = String(read(read_pipe))
+    close(read_pipe)
+
+    return output
 end
 
 @testset "PluginInfoCommand" begin

@@ -10,20 +10,19 @@ using JuliaPkgTemplatesCommandLineInterface
 # Access CompletionCommand through parent module
 const CompletionCommand = JuliaPkgTemplatesCommandLineInterface.CompletionCommand
 
-# Helper function for capturing stdout
+# Helper function for capturing stdout (same as test_integration.jl)
 function capture_stdout(f::Function)
     old_stdout = stdout
-    rd, wr = redirect_stdout()
+    (read_pipe, write_pipe) = redirect_stdout()
 
-    task = @async read(rd, String)
+    f()
 
-    try
-        f()
-        close(wr)
-        fetch(task)
-    finally
-        redirect_stdout(old_stdout)
-    end
+    redirect_stdout(old_stdout)
+    close(write_pipe)
+    output = String(read(read_pipe))
+    close(read_pipe)
+
+    return output
 end
 
 @testset "CompletionCommand" begin
