@@ -61,6 +61,13 @@ description = "Serve documentation locally"
 run = "julia --project=docs -e 'using LiveServer; serve(dir=\"docs/build\")'"
 
 # Utility tasks
+[tasks.install]
+description = "Install the CLI application using Pkg.Apps"
+run = "julia --project='{{ env.JULIA_PROJECT }}' -e 'using Pkg; Pkg.Apps.add(path=\"{{ env.JULIA_PROJECT }}\")'"
+
+[tasks.uninstall]
+description = "Uninstall the CLI application using Pkg.Apps"
+run = "julia --project='{{ env.JULIA_PROJECT }}' -e 'using Pkg; Pkg.Apps.rm(\"JuliaPkgTemplatesCommandLineInterface\")'"
 
 [tasks.precompile]
 description = "Precompile package"
@@ -74,3 +81,4 @@ run = "julia --project='{{ env.JULIA_PROJECT }}' --code-coverage=user -e 'using 
 [tasks.coverage]
 description = "Generate coverage report"
 run = "julia --project='{{ env.JULIA_PROJECT }}' -e 'using Pkg; using Coverage; coverage = process_folder(); covered_lines, total_lines = get_summary(coverage); println(\"Coverage: \", round(covered_lines/total_lines*100, digits=2), \"%\")'"
+

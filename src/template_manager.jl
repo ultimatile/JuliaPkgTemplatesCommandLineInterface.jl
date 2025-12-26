@@ -51,7 +51,8 @@ function generate_mise_config(
         data = Dict(
             "package_name" => package_name,
             "project_dir" => "@",
-            "mise_filename_base" => get(options, "mise_filename_base", ".mise")
+            "mise_filename_base" => get(options, "mise_filename_base", ".mise"),
+            "cli_name" => lowercase(package_name)
         )
 
         # Render template
