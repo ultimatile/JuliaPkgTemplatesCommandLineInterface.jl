@@ -98,7 +98,7 @@ using TOML
         # Test dispatch_command function
         @testset "dispatch_command - create command" begin
             # Mock args for create command
-            args = Dict("package_name" => "TestPkg")
+            args = Dict{String,Any}("package_name" => "TestPkg")
             result = JuliaPkgTemplatesCommandLineInterface.dispatch_command("create", args)
             @test result isa JuliaPkgTemplatesCommandLineInterface.CommandResult
         end
@@ -116,7 +116,7 @@ using TOML
         end
 
         @testset "dispatch_command - completion command" begin
-            args = Dict("shell" => "fish")
+            args = Dict{String,Any}("shell" => "fish")
             result = JuliaPkgTemplatesCommandLineInterface.dispatch_command("completion", args)
             @test result isa JuliaPkgTemplatesCommandLineInterface.CommandResult
         end
