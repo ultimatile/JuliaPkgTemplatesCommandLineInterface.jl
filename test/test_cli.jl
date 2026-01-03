@@ -4,7 +4,7 @@ Tests for CLI argument parser
 Task 4.1: CLI Argument Parser Construction
 - ArgParse.jl ArgParseSettings configuration
 - Subcommand definitions (create, config, plugin-info, completion)
-- Global options (--version, --verbose, --dry-run)
+- Global options (--version, --verbose)
 - Dynamic plugin option generation
 """
 
@@ -38,10 +38,9 @@ using TOML
         # --version option (automatically added by ArgParse with add_version=true)
         @test settings.add_version == true
 
-        # Verify existence of --verbose and --dry-run options by parsing
+        # Verify existence of --verbose option by parsing
         parsed = parse_args(["--verbose", "create", "Pkg"], settings)
         @test parsed["verbose"] == true
-        @test parsed["dry-run"] == false  # false since not specified
     end
 
     @testset "add_dynamic_plugin_options! - plugin option generation" begin

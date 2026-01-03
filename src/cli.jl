@@ -54,9 +54,6 @@ function create_argument_parser()::ArgParseSettings
         "--verbose", "-v"
             action = :store_true
             help = "Enable verbose logging"
-        "--dry-run"
-            action = :store_true
-            help = "Show what would be done without executing"
     end
 
     # Options for create subcommand
@@ -74,6 +71,9 @@ function create_argument_parser()::ArgParseSettings
         "--with-mise"
             action = :store_true
             help = "Generate mise configuration file"
+        "--dry-run"
+            action = :store_true
+            help = "Show what would be done without executing"
     end
 
     # Options for config subcommand
