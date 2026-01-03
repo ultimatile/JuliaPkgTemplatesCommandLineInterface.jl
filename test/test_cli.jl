@@ -164,36 +164,19 @@ using TOML
         @testset "Apps invocation - help display" begin
             # Test Apps invocation with no arguments (should show help)
             # Note: ArgParse exits with non-zero when no command is given, so we catch the process failure
-            cmd = pipeline(`$(Base.julia_cmd()) --project=. -m JuliaPkgTemplatesCommandLineInterface`, stderr=stdout)
-            try
-                result = read(cmd, String)
-                @test occursin("usage:", result)
-                @test occursin("jtc", result)
-            catch e
-                if e isa ProcessFailedException
-                    # ArgParse exits with error when no command given, but we can check output was generated
-                    @test true  # Expected behavior - ArgParse shows help and exits with error
-                else
-                    rethrow(e)
-                end
-            end
+            proc = run(pipeline(`$(Base.julia_cmd()) --project=. -m JuliaPkgTemplatesCommandLineInterface`, stdout=devnull, stderr=devnull), wait=false)
+            wait(proc)
+            # ArgParse exits with error when no command given
+            @test proc.exitcode != 0  # Expected behavior
         end
 
         @testset "Apps invocation - error handling" begin
             # Test Apps invocation with invalid arguments
             # Should return error message
-            cmd = pipeline(`$(Base.julia_cmd()) --project=. -m JuliaPkgTemplatesCommandLineInterface invalid-command`, stderr=stdout)
-            try
-                result = read(cmd, String)
-                @test occursin("unknown command", result) || occursin("error", lowercase(result))
-            catch e
-                if e isa ProcessFailedException
-                    # Command exits with error as expected for invalid command
-                    @test true  # Expected behavior
-                else
-                    rethrow(e)
-                end
-            end
+            proc = run(pipeline(`$(Base.julia_cmd()) --project=. -m JuliaPkgTemplatesCommandLineInterface invalid-command`, stdout=devnull, stderr=devnull), wait=false)
+            wait(proc)
+            # Command exits with error as expected for invalid command
+            @test proc.exitcode != 0  # Expected behavior
         end
     end
 end

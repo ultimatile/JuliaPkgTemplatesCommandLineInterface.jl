@@ -11,7 +11,7 @@ using Mustache
 using ..JuliaPkgTemplatesCommandLineInterface: TemplateGenerationError
 
 """
-    generate_mise_config(package_name::String, options::Dict{String, Any})::Nothing
+    generate_mise_config(package_name::String, options::Dict{String, Any}, output_dir::String=pwd())::Nothing
 
 Generate a mise configuration file for the given package.
 
@@ -27,12 +27,13 @@ Uses Mustache.jl to render the mise.toml template with package-specific data.
 # Example
 ```julia
 options = Dict("mise_filename_base" => ".mise")
-TemplateManager.generate_mise_config("MyPackage", options)
+TemplateManager.generate_mise_config("MyPackage", options, "/path/to/output")
 ```
 """
 function generate_mise_config(
     package_name::String,
-    options::Dict{String,Any}
+    options::Dict{String,Any},
+    output_dir::String=pwd()
 )::Nothing
     template_path = joinpath(@__DIR__, "templates", "mise.toml.mustache")
 
@@ -59,7 +60,7 @@ function generate_mise_config(
         rendered = Mustache.render(template, data)
 
         # Write output file
-        output_path = joinpath(package_name, "$(data["mise_filename_base"]).toml")
+        output_path = joinpath(output_dir, package_name, "$(data["mise_filename_base"]).toml")
         write(output_path, rendered)
 
         # Log success (would use @info in production with logging configured)

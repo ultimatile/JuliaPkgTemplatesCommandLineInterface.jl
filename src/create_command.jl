@@ -175,7 +175,7 @@ function execute(args::Dict{String, Any})::CommandResult
         # Generate mise config if requested
         if get(merged_options, "with_mise", true)
             try
-                TemplateManager.generate_mise_config(package_name, merged_options)
+                TemplateManager.generate_mise_config(package_name, merged_options, output_dir)
             catch e
                 @warn "Failed to generate mise config" exception=e
             end

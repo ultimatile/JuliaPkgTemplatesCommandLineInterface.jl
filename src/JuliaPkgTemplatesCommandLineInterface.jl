@@ -48,8 +48,6 @@ include("completion_command.jl")
 # Include CLI module
 include("cli.jl")
 
-# Export CLI functions
-export main
 export create_argument_parser
 export add_dynamic_plugin_options!
 export get_version
