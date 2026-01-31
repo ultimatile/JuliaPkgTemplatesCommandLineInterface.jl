@@ -67,11 +67,11 @@ run = "julia --project=docs -e 'using LiveServer; serve(dir=\"docs/build\")'"
 # Utility tasks
 [tasks.install]
 description = "Install the CLI application using Pkg.Apps"
-run = "julia --project='{{ env.JULIA_PROJECT }}' -e 'using Pkg; Pkg.Apps.add(path=\"{{ env.JULIA_PROJECT }}\")'"
+run = "julia -e 'using Pkg; Pkg.Apps.add(path=\"'\"$(pwd)\"'\")'"
 
 [tasks.uninstall]
 description = "Uninstall the CLI application using Pkg.Apps"
-run = "julia --project='{{ env.JULIA_PROJECT }}' -e 'using Pkg; Pkg.Apps.rm(\"JuliaPkgTemplatesCommandLineInterface\")'"
+run = "julia -e 'using Pkg; Pkg.Apps.rm(\"JuliaPkgTemplatesCommandLineInterface\")'"
 
 [tasks.precompile]
 description = "Precompile package"
