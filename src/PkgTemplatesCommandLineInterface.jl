@@ -1,4 +1,4 @@
-module JuliaPkgTemplatesCommandLineInterface
+module PkgTemplatesCommandLineInterface
 
 # Export error types
 export JTCError

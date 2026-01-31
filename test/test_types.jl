@@ -1,5 +1,5 @@
 using Test
-using JuliaPkgTemplatesCommandLineInterface
+using PkgTemplatesCommandLineInterface
 
 @testset "Common Data Structures" begin
     @testset "CommandResult" begin

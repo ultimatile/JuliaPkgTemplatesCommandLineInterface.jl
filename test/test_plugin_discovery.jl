@@ -6,7 +6,7 @@ and zero-argument plugin detection.
 """
 
 using Test
-using JuliaPkgTemplatesCommandLineInterface
+using PkgTemplatesCommandLineInterface
 using PkgTemplates
 
 # Import PluginDiscovery (will be defined in src/plugin_discovery.jl)

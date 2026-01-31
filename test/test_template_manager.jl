@@ -6,10 +6,10 @@ and shell completion script generation.
 """
 
 using Test
-using JuliaPkgTemplatesCommandLineInterface
+using PkgTemplatesCommandLineInterface
 
 # Access TemplateManager through parent module
-const TemplateManager = JuliaPkgTemplatesCommandLineInterface.TemplateManager
+const TemplateManager = PkgTemplatesCommandLineInterface.TemplateManager
 
 @testset "TemplateManager Tests" begin
     @testset "generate_mise_config" begin

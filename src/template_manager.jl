@@ -8,7 +8,7 @@ and shell completion scripts using Mustache.jl templates.
 module TemplateManager
 
 using Mustache
-using ..JuliaPkgTemplatesCommandLineInterface: TemplateGenerationError
+using ..PkgTemplatesCommandLineInterface: TemplateGenerationError
 
 """
     generate_mise_config(package_name::String, options::Dict{String, Any}, output_dir::String=pwd())::Nothing

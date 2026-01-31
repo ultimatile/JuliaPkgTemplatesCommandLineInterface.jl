@@ -6,7 +6,7 @@ including plugin instantiation and error handling.
 """
 
 using Test
-using JuliaPkgTemplatesCommandLineInterface
+using PkgTemplatesCommandLineInterface
 using PkgTemplates
 using TOML
 

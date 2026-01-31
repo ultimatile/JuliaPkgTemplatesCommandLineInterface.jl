@@ -1,4 +1,4 @@
-name = "JuliaPkgTemplatesCommandLineInterface"
+name = "PkgTemplatesCommandLineInterface"
 uuid = "b8670afd-c0a1-4d96-acf7-d645be7ab2db"
 version = "0.0.2"
 authors = ["ultimatile <ultimatile@users.noreply.github.com>"]

@@ -7,7 +7,7 @@ and dynamic plugin integration.
 module CompletionCommand
 
 using PkgTemplates
-using ..JuliaPkgTemplatesCommandLineInterface: CommandResult, TemplateGenerationError, PluginDiscovery, TemplateManager
+using ..PkgTemplatesCommandLineInterface: CommandResult, TemplateGenerationError, PluginDiscovery, TemplateManager
 
 """
     execute(args::Dict{String, Any})::CommandResult

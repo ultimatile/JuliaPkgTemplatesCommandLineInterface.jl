@@ -1,6 +1,6 @@
 using Test
-using JuliaPkgTemplatesCommandLineInterface
-import JuliaPkgTemplatesCommandLineInterface.CreateCommand
+using PkgTemplatesCommandLineInterface
+import PkgTemplatesCommandLineInterface.CreateCommand
 
 @testset "CreateCommand Tests" begin
     @testset "merge_config" begin

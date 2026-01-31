@@ -1,4 +1,4 @@
-# mise configuration for JuliaPkgTemplatesCommandLineInterface.jl
+# mise configuration for PkgTemplatesCommandLineInterface.jl
 # https://mise.jdx.dev/
 
 [env]
@@ -32,7 +32,7 @@ run = "julia --project='{{ env.JULIA_PROJECT }}' -e 'using Pkg; Pkg.status()'"
 # Development tasks
 [tasks.run]
 description = "Run the CLI application locally (usage: mise run run -- create MyPackage)"
-run = "julia --project='{{ env.JULIA_PROJECT }}' -e 'using JuliaPkgTemplatesCommandLineInterface' --"
+run = "julia --project='{{ env.JULIA_PROJECT }}' -e 'using PkgTemplatesCommandLineInterface' --"
 
 [tasks.test]
 description = "Run package tests"
@@ -67,7 +67,7 @@ run = "julia --project=docs -e 'using LiveServer; serve(dir=\"docs/build\")'"
 # Utility tasks
 [tasks.install]
 description = "Install the CLI application using Pkg.Apps"
-run = "julia -e 'using Pkg; Pkg.Apps.add(url=\"https://github.com/ultimatile/JuliaPkgTemplatesCommandLineInterface.jl\")'"
+run = "julia -e 'using Pkg; Pkg.Apps.add(url=\"https://github.com/ultimatile/PkgTemplatesCommandLineInterface.jl\")'"
 
 [tasks.install-local]
 description = "Install the CLI application from local path"
@@ -75,7 +75,7 @@ run = "julia -e 'using Pkg; Pkg.Apps.add(path=\"'\"$(pwd)\"'\")'"
 
 [tasks.uninstall]
 description = "Uninstall the CLI application using Pkg.Apps"
-run = "julia -e 'using Pkg; Pkg.Apps.rm(\"JuliaPkgTemplatesCommandLineInterface\")'"
+run = "julia -e 'using Pkg; Pkg.Apps.rm(\"PkgTemplatesCommandLineInterface\")'"
 
 [tasks.precompile]
 description = "Precompile package"

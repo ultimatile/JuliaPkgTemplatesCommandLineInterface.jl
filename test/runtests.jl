@@ -1,13 +1,13 @@
-using JuliaPkgTemplatesCommandLineInterface
+using PkgTemplatesCommandLineInterface
 using Test
 using Aqua
 
-@testset "JuliaPkgTemplatesCommandLineInterface.jl" begin
+@testset "PkgTemplatesCommandLineInterface.jl" begin
     @testset "Code quality (Aqua.jl)" begin
         # Skip stale_deps and project_extras checks during initial development
         # Will be re-enabled after core implementation is complete
         Aqua.test_all(
-            JuliaPkgTemplatesCommandLineInterface;
+            PkgTemplatesCommandLineInterface;
             stale_deps=true,
             deps_compat=(check_extras=false,)
         )

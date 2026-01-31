@@ -1,5 +1,5 @@
 """
-Common data structures for JuliaPkgTemplatesCommandLineInterface.
+Common data structures for PkgTemplatesCommandLineInterface.
 
 This module defines reusable data types used throughout the application
 for representing command results and plugin metadata.

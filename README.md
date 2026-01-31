@@ -1,6 +1,6 @@
-# JuliaPkgTemplatesCommandLineInterface.jl
+# PkgTemplatesCommandLineInterface.jl
 
-[![Build Status](https://github.com/ultimatile/JuliaPkgTemplatesCommandLineInterface.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/ultimatile/JuliaPkgTemplatesCommandLineInterface.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![Build Status](https://github.com/ultimatile/PkgTemplatesCommandLineInterface.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/ultimatile/PkgTemplatesCommandLineInterface.jl/actions/workflows/CI.yml?query=branch%3Amain)
 [![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 
 A command-line interface for [PkgTemplates.jl](https://github.com/JuliaCI/PkgTemplates.jl).
@@ -19,14 +19,14 @@ A command-line interface for [PkgTemplates.jl](https://github.com/JuliaCI/PkgTem
 ## Installation
 
 ```bash
-julia -e 'using Pkg; Pkg.Apps.add(url="https://github.com/ultimatile/JuliaPkgTemplatesCommandLineInterface.jl")'
+julia -e 'using Pkg; Pkg.Apps.add(url="https://github.com/ultimatile/PkgTemplatesCommandLineInterface.jl")'
 ```
 
 ### Using mise
 
 ```bash
-git clone https://github.com/ultimatile/JuliaPkgTemplatesCommandLineInterface.jl
-cd JuliaPkgTemplatesCommandLineInterface.jl
+git clone https://github.com/ultimatile/PkgTemplatesCommandLineInterface.jl
+cd PkgTemplatesCommandLineInterface.jl
 mise run install
 ```
 
@@ -96,7 +96,7 @@ After updating Julia (e.g., `juliaup up`), you may see:
 This occurs because the shim file has a hardcoded path to the old Julia version. Reinstall to fix:
 
 ```bash
-julia -e 'using Pkg; Pkg.Apps.add(url="https://github.com/ultimatile/JuliaPkgTemplatesCommandLineInterface.jl")'
+julia -e 'using Pkg; Pkg.Apps.add(url="https://github.com/ultimatile/PkgTemplatesCommandLineInterface.jl")'
 ```
 
 ## License

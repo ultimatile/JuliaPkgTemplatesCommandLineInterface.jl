@@ -5,10 +5,10 @@ Tests completion command execution and shell completion script generation.
 """
 
 using Test
-using JuliaPkgTemplatesCommandLineInterface
+using PkgTemplatesCommandLineInterface
 
 # Access CompletionCommand through parent module
-const CompletionCommand = JuliaPkgTemplatesCommandLineInterface.CompletionCommand
+const CompletionCommand = PkgTemplatesCommandLineInterface.CompletionCommand
 
 # Helper function for capturing stdout (same as test_integration.jl)
 function capture_stdout(f::Function)
@@ -88,7 +88,7 @@ end
 
             @test result.success == true
             # Get actual plugins and verify at least one is in output
-            plugins = JuliaPkgTemplatesCommandLineInterface.PluginDiscovery.get_plugins()
+            plugins = PkgTemplatesCommandLineInterface.PluginDiscovery.get_plugins()
             @test !isempty(plugins)
 
             # Check if at least some plugin names appear in completion

@@ -9,7 +9,7 @@ module PluginInfoCommand
 using PkgTemplates
 
 # Import from parent module
-using ..JuliaPkgTemplatesCommandLineInterface: CommandResult, PluginNotFoundError, PluginDetails
+using ..PkgTemplatesCommandLineInterface: CommandResult, PluginNotFoundError, PluginDetails
 import ..PluginDiscovery
 
 """

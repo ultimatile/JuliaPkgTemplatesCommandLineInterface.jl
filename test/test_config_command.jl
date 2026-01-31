@@ -6,11 +6,11 @@ and update logic.
 """
 
 using Test
-using JuliaPkgTemplatesCommandLineInterface
+using PkgTemplatesCommandLineInterface
 using TOML
 
 # Import ConfigCommand from the main module
-using JuliaPkgTemplatesCommandLineInterface.ConfigCommand
+using PkgTemplatesCommandLineInterface.ConfigCommand
 
 @testset "ConfigCommand" begin
     @testset "format_config()" begin

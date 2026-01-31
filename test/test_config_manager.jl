@@ -6,7 +6,7 @@ default config generation, and nested configuration support.
 """
 
 using Test
-using JuliaPkgTemplatesCommandLineInterface
+using PkgTemplatesCommandLineInterface
 using TOML
 
 # Import ConfigManager (will be defined in src/config_manager.jl)

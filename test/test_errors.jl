@@ -1,5 +1,5 @@
 using Test
-using JuliaPkgTemplatesCommandLineInterface
+using PkgTemplatesCommandLineInterface
 
 @testset "Custom Error Types" begin
     @testset "JTCError abstract type" begin

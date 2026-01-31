@@ -6,11 +6,11 @@ and plugin details formatting.
 """
 
 using Test
-using JuliaPkgTemplatesCommandLineInterface
+using PkgTemplatesCommandLineInterface
 using PkgTemplates
 
 # Access PluginInfoCommand through parent module
-const PluginInfoCommand = JuliaPkgTemplatesCommandLineInterface.PluginInfoCommand
+const PluginInfoCommand = PkgTemplatesCommandLineInterface.PluginInfoCommand
 
 # Helper function for capturing stdout (same as test_integration.jl)
 function capture_stdout(f::Function)

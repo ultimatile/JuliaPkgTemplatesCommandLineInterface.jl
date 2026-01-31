@@ -7,7 +7,7 @@ and detecting zero-argument plugins.
 module PluginDiscovery
 
 using PkgTemplates
-using JuliaPkgTemplatesCommandLineInterface: PluginDetails, PluginNotFoundError
+using PkgTemplatesCommandLineInterface: PluginDetails, PluginNotFoundError
 
 """
     get_plugins()::Vector{Type{<:PkgTemplates.Plugin}}

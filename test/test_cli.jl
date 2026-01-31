@@ -9,13 +9,13 @@ Task 4.1: CLI Argument Parser Construction
 """
 
 using Test
-using JuliaPkgTemplatesCommandLineInterface
+using PkgTemplatesCommandLineInterface
 using ArgParse
 using TOML
 
 @testset "CLI Argument Parser Tests" begin
     @testset "create_argument_parser - basic structure" begin
-        settings = JuliaPkgTemplatesCommandLineInterface.create_argument_parser()
+        settings = PkgTemplatesCommandLineInterface.create_argument_parser()
 
         @test settings isa ArgParseSettings
         @test settings.prog == "jtc"
@@ -23,7 +23,7 @@ using TOML
     end
 
     @testset "create_argument_parser - subcommand definitions" begin
-        settings = JuliaPkgTemplatesCommandLineInterface.create_argument_parser()
+        settings = PkgTemplatesCommandLineInterface.create_argument_parser()
 
         # Verify that subcommands are correctly defined
         @test haskey(settings, "create")
@@ -33,7 +33,7 @@ using TOML
     end
 
     @testset "create_argument_parser - global options" begin
-        settings = JuliaPkgTemplatesCommandLineInterface.create_argument_parser()
+        settings = PkgTemplatesCommandLineInterface.create_argument_parser()
 
         # --version option (automatically added by ArgParse with add_version=true)
         @test settings.add_version == true
@@ -44,10 +44,10 @@ using TOML
     end
 
     @testset "add_dynamic_plugin_options! - plugin option generation" begin
-        settings = JuliaPkgTemplatesCommandLineInterface.create_argument_parser()
+        settings = PkgTemplatesCommandLineInterface.create_argument_parser()
 
         # Add dynamic plugin options
-        JuliaPkgTemplatesCommandLineInterface.add_dynamic_plugin_options!(settings)
+        PkgTemplatesCommandLineInterface.add_dynamic_plugin_options!(settings)
 
         # Verify that plugin options are added to the create subcommand
         # Verify Git plugin option by parsing (standard plugin in PkgTemplates.jl)
@@ -61,8 +61,8 @@ using TOML
     end
 
     @testset "parse_args - parsing create command" begin
-        settings = JuliaPkgTemplatesCommandLineInterface.create_argument_parser()
-        JuliaPkgTemplatesCommandLineInterface.add_dynamic_plugin_options!(settings)
+        settings = PkgTemplatesCommandLineInterface.create_argument_parser()
+        PkgTemplatesCommandLineInterface.add_dynamic_plugin_options!(settings)
 
         # Basic create command
         args = ["create", "MyPackage"]
@@ -73,8 +73,8 @@ using TOML
     end
 
     @testset "parse_args - parsing global options" begin
-        settings = JuliaPkgTemplatesCommandLineInterface.create_argument_parser()
-        JuliaPkgTemplatesCommandLineInterface.add_dynamic_plugin_options!(settings)
+        settings = PkgTemplatesCommandLineInterface.create_argument_parser()
+        PkgTemplatesCommandLineInterface.add_dynamic_plugin_options!(settings)
 
         # With --verbose option
         args = ["--verbose", "create", "MyPackage"]
@@ -85,7 +85,7 @@ using TOML
     end
 
     @testset "parse_args - --version option" begin
-        settings = JuliaPkgTemplatesCommandLineInterface.create_argument_parser()
+        settings = PkgTemplatesCommandLineInterface.create_argument_parser()
 
         # Since --version is automatically handled by ArgParse,
         # we verify that settings.add_version is true
@@ -98,49 +98,49 @@ using TOML
         @testset "dispatch_command - create command" begin
             mktempdir() do tmpdir
                 args = Dict{String,Any}("package_name" => "TestPkg", "output-dir" => tmpdir)
-                result = JuliaPkgTemplatesCommandLineInterface.dispatch_command("create", args)
-                @test result isa JuliaPkgTemplatesCommandLineInterface.CommandResult
+                result = PkgTemplatesCommandLineInterface.dispatch_command("create", args)
+                @test result isa PkgTemplatesCommandLineInterface.CommandResult
             end
         end
 
         @testset "dispatch_command - config command" begin
             args = Dict{String, Any}()
-            result = JuliaPkgTemplatesCommandLineInterface.dispatch_command("config", args)
-            @test result isa JuliaPkgTemplatesCommandLineInterface.CommandResult
+            result = PkgTemplatesCommandLineInterface.dispatch_command("config", args)
+            @test result isa PkgTemplatesCommandLineInterface.CommandResult
         end
 
         @testset "dispatch_command - plugin-info command" begin
             args = Dict{String, Any}()
-            result = JuliaPkgTemplatesCommandLineInterface.dispatch_command("plugin-info", args)
-            @test result isa JuliaPkgTemplatesCommandLineInterface.CommandResult
+            result = PkgTemplatesCommandLineInterface.dispatch_command("plugin-info", args)
+            @test result isa PkgTemplatesCommandLineInterface.CommandResult
         end
 
         @testset "dispatch_command - completion command" begin
             args = Dict{String,Any}("shell" => "fish")
-            result = JuliaPkgTemplatesCommandLineInterface.dispatch_command("completion", args)
-            @test result isa JuliaPkgTemplatesCommandLineInterface.CommandResult
+            result = PkgTemplatesCommandLineInterface.dispatch_command("completion", args)
+            @test result isa PkgTemplatesCommandLineInterface.CommandResult
         end
 
         @testset "dispatch_command - unknown command error" begin
             args = Dict{String, Any}()
-            @test_throws ErrorException JuliaPkgTemplatesCommandLineInterface.dispatch_command("unknown", args)
+            @test_throws ErrorException PkgTemplatesCommandLineInterface.dispatch_command("unknown", args)
         end
     end
 
     @testset "handle_error function" begin
         # Test error message conversion
         @testset "handle_error - JTCError types" begin
-            err = JuliaPkgTemplatesCommandLineInterface.PackageGenerationError("Test error")
-            result = JuliaPkgTemplatesCommandLineInterface.handle_error(err)
-            @test result isa JuliaPkgTemplatesCommandLineInterface.CommandResult
+            err = PkgTemplatesCommandLineInterface.PackageGenerationError("Test error")
+            result = PkgTemplatesCommandLineInterface.handle_error(err)
+            @test result isa PkgTemplatesCommandLineInterface.CommandResult
             @test result.success == false
             @test occursin("Test error", result.message)
         end
 
         @testset "handle_error - generic Exception" begin
             err = ErrorException("Generic error")
-            result = JuliaPkgTemplatesCommandLineInterface.handle_error(err)
-            @test result isa JuliaPkgTemplatesCommandLineInterface.CommandResult
+            result = PkgTemplatesCommandLineInterface.handle_error(err)
+            @test result isa PkgTemplatesCommandLineInterface.CommandResult
             @test result.success == false
             @test occursin("Generic error", result.message)
         end
@@ -158,14 +158,14 @@ using TOML
 
         @testset "Apps invocation - --version" begin
             # Test Apps invocation via julia -m flag
-            result = read(`$(Base.julia_cmd()) --project=. -m JuliaPkgTemplatesCommandLineInterface --version`, String)
+            result = read(`$(Base.julia_cmd()) --project=. -m PkgTemplatesCommandLineInterface --version`, String)
             @test occursin(r"\d+\.\d+\.\d+", result)  # Version format: x.y.z
         end
 
         @testset "Apps invocation - help display" begin
             # Test Apps invocation with no arguments (should show help)
             # Note: ArgParse exits with non-zero when no command is given, so we catch the process failure
-            proc = run(pipeline(`$(Base.julia_cmd()) --project=. -m JuliaPkgTemplatesCommandLineInterface`, stdout=devnull, stderr=devnull), wait=false)
+            proc = run(pipeline(`$(Base.julia_cmd()) --project=. -m PkgTemplatesCommandLineInterface`, stdout=devnull, stderr=devnull), wait=false)
             wait(proc)
             # ArgParse exits with error when no command given
             @test proc.exitcode != 0  # Expected behavior
@@ -174,7 +174,7 @@ using TOML
         @testset "Apps invocation - error handling" begin
             # Test Apps invocation with invalid arguments
             # Should return error message
-            proc = run(pipeline(`$(Base.julia_cmd()) --project=. -m JuliaPkgTemplatesCommandLineInterface invalid-command`, stdout=devnull, stderr=devnull), wait=false)
+            proc = run(pipeline(`$(Base.julia_cmd()) --project=. -m PkgTemplatesCommandLineInterface invalid-command`, stdout=devnull, stderr=devnull), wait=false)
             wait(proc)
             # Command exits with error as expected for invalid command
             @test proc.exitcode != 0  # Expected behavior

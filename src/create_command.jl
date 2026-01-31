@@ -9,7 +9,7 @@ Implements the `create` command execution logic, including:
 """
 module CreateCommand
 
-using ..JuliaPkgTemplatesCommandLineInterface: CommandResult, PackageGenerationError
+using ..PkgTemplatesCommandLineInterface: CommandResult, PackageGenerationError
 import ..ConfigManager
 import ..PackageGenerator
 import ..TemplateManager

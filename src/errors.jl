@@ -1,5 +1,5 @@
 """
-Custom error types for JuliaPkgTemplatesCommandLineInterface.
+Custom error types for PkgTemplatesCommandLineInterface.
 
 This module defines a hierarchy of error types used throughout the application
 to provide clear, user-friendly error messages.

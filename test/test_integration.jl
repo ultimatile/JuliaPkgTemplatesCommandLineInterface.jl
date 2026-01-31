@@ -8,7 +8,7 @@ Tests the complete flow:
 """
 
 using Test
-using JuliaPkgTemplatesCommandLineInterface
+using PkgTemplatesCommandLineInterface
 using ArgParse
 using TOML
 
@@ -37,15 +37,15 @@ using TOML
                 # Set XDG_CONFIG_HOME to use our test config
                 withenv("XDG_CONFIG_HOME" => joinpath(tmpdir, ".config")) do
                     # Parse arguments as if from command line
-                    settings = JuliaPkgTemplatesCommandLineInterface.create_argument_parser()
-                    JuliaPkgTemplatesCommandLineInterface.add_dynamic_plugin_options!(settings)
+                    settings = PkgTemplatesCommandLineInterface.create_argument_parser()
+                    PkgTemplatesCommandLineInterface.add_dynamic_plugin_options!(settings)
 
                     # Simulate: jtc create TestPkg --author "CLI Author" --output-dir tmpdir
                     args = ["create", "TestPkg", "--author", "CLI Author", "--output-dir", tmpdir]
                     parsed_args = ArgParse.parse_args(args, settings)
 
                     # Execute create command (full integration)
-                    result = JuliaPkgTemplatesCommandLineInterface.dispatch_command(
+                    result = PkgTemplatesCommandLineInterface.dispatch_command(
                         "create",
                         parsed_args["create"]
                     )
@@ -77,7 +77,7 @@ using TOML
                         "author" => "Integration Test Author"
                     )
 
-                    set_result = JuliaPkgTemplatesCommandLineInterface.dispatch_command(
+                    set_result = PkgTemplatesCommandLineInterface.dispatch_command(
                         "config",
                         set_args
                     )
@@ -93,7 +93,7 @@ using TOML
                     old_stdout = stdout
                     (read_pipe, write_pipe) = redirect_stdout()
 
-                    show_result = JuliaPkgTemplatesCommandLineInterface.dispatch_command(
+                    show_result = PkgTemplatesCommandLineInterface.dispatch_command(
                         "config",
                         show_args
                     )
@@ -116,7 +116,7 @@ using TOML
             old_stdout = stdout
             (read_pipe, write_pipe) = redirect_stdout()
 
-            result = JuliaPkgTemplatesCommandLineInterface.dispatch_command(
+            result = PkgTemplatesCommandLineInterface.dispatch_command(
                 "plugin-info",
                 args
             )
@@ -138,7 +138,7 @@ using TOML
             old_stdout = stdout
             (read_pipe, write_pipe) = redirect_stdout()
 
-            result = JuliaPkgTemplatesCommandLineInterface.dispatch_command(
+            result = PkgTemplatesCommandLineInterface.dispatch_command(
                 "completion",
                 args
             )
@@ -164,7 +164,7 @@ using TOML
                     "output-dir" => tmpdir
                 )
 
-                result = JuliaPkgTemplatesCommandLineInterface.dispatch_command(
+                result = PkgTemplatesCommandLineInterface.dispatch_command(
                     "create",
                     args
                 )
@@ -198,7 +198,7 @@ using TOML
                     (read_pipe, write_pipe) = redirect_stdout()
 
                     # Should emit expected error/warn logs and succeed with default config
-                    result = @test_logs (:error,) (:warn,) JuliaPkgTemplatesCommandLineInterface.dispatch_command(
+                    result = @test_logs (:error,) (:warn,) PkgTemplatesCommandLineInterface.dispatch_command(
                         "config",
                         args
                     )
@@ -218,7 +218,7 @@ using TOML
         @testset "Global error handler catches unhandled exceptions" begin
             # Test: Unknown command should be caught by handle_error
             unknown_error = ErrorException("Test unexpected error")
-            result = JuliaPkgTemplatesCommandLineInterface.handle_error(unknown_error)
+            result = PkgTemplatesCommandLineInterface.handle_error(unknown_error)
 
             @test result.success == false
             @test occursin("Unexpected error", result.message)
@@ -237,7 +237,7 @@ using TOML
                         "dry-run" => true
                     )
 
-                    result = JuliaPkgTemplatesCommandLineInterface.dispatch_command(
+                    result = PkgTemplatesCommandLineInterface.dispatch_command(
                         "create",
                         args
                     )
@@ -267,7 +267,7 @@ using TOML
                     old_stdout = stdout
                     (read_pipe, write_pipe) = redirect_stdout()
 
-                    result = JuliaPkgTemplatesCommandLineInterface.dispatch_command(
+                    result = PkgTemplatesCommandLineInterface.dispatch_command(
                         "create",
                         args
                     )
@@ -290,13 +290,13 @@ using TOML
             mktempdir() do config_dir
                 mktempdir() do output_dir
                     withenv("XDG_CONFIG_HOME" => config_dir) do
-                        settings = JuliaPkgTemplatesCommandLineInterface.create_argument_parser()
-                        JuliaPkgTemplatesCommandLineInterface.add_dynamic_plugin_options!(settings)
+                        settings = PkgTemplatesCommandLineInterface.create_argument_parser()
+                        PkgTemplatesCommandLineInterface.add_dynamic_plugin_options!(settings)
 
                         parsed_args = ArgParse.parse_args(["create", "TestE2E", "--output-dir", output_dir, "--user", "testuser"], settings)
 
                         command = parsed_args["%COMMAND%"]
-                        result = JuliaPkgTemplatesCommandLineInterface.dispatch_command(command, parsed_args[command])
+                        result = PkgTemplatesCommandLineInterface.dispatch_command(command, parsed_args[command])
 
                         @test result.success == true
                         @test isdir(joinpath(output_dir, "TestE2E"))

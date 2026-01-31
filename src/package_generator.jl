@@ -1,5 +1,5 @@
 """
-PackageGenerator module for JuliaPkgTemplatesCommandLineInterface.
+PackageGenerator module for PkgTemplatesCommandLineInterface.
 
 This module provides functionality to generate Julia packages using PkgTemplates.jl,
 including plugin instantiation and error handling.
@@ -8,7 +8,7 @@ including plugin instantiation and error handling.
 module PackageGenerator
 
 using PkgTemplates
-using ..JuliaPkgTemplatesCommandLineInterface: PackageGenerationError
+using ..PkgTemplatesCommandLineInterface: PackageGenerationError
 
 export create_package, instantiate_plugins
 

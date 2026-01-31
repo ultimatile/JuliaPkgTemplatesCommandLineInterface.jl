@@ -8,7 +8,7 @@ module ConfigCommand
 using TOML
 
 # Import from parent module
-using ..JuliaPkgTemplatesCommandLineInterface: CommandResult, JTCError, ConfigurationError
+using ..PkgTemplatesCommandLineInterface: CommandResult, JTCError, ConfigurationError
 import ..ConfigManager
 
 """
