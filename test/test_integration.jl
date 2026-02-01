@@ -161,7 +161,8 @@ using TOML
                 # Test: Invalid package name should trigger PkgTemplates error
                 args = Dict{String, Any}(
                     "package_name" => "invalid-package-name",  # Invalid: contains hyphen
-                    "output-dir" => tmpdir
+                    "output-dir" => tmpdir,
+                    "user" => "testuser"
                 )
 
                 result = PkgTemplatesCommandLineInterface.dispatch_command(
