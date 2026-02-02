@@ -39,8 +39,8 @@ jtc create MyPackage
 # Create with options
 jtc create MyPackage --author "Your Name" --user yourgithubuser --output-dir ~/projects
 
-# Generate mise configuration file
-jtc create MyPackage --with-mise
+# Generate without mise configuration file
+jtc create MyPackage --no-mise
 
 # Dry run (preview without executing)
 jtc create MyPackage --dry-run

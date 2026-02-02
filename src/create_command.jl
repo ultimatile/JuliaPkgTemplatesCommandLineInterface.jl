@@ -172,8 +172,8 @@ function execute(args::Dict{String, Any})::CommandResult
         output_dir = get(merged_options, "output-dir", pwd())
         PackageGenerator.create_package(package_name, merged_options, plugin_options, output_dir)
 
-        # Generate mise config if requested
-        if get(merged_options, "with_mise", true)
+        # Generate mise config if requested (--no-mise takes precedence)
+        if !get(args, "no-mise", false) && get(merged_options, "with_mise", true)
             try
                 TemplateManager.generate_mise_config(package_name, merged_options, output_dir)
             catch e

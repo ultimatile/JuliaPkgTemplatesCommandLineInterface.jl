@@ -9,7 +9,7 @@ _jtc() {
 
     case "${words[1]}" in
         create)
-            local create_opts="--author --user --output-dir -o --with-mise --dry-run --help"
+            local create_opts="--author --user --output-dir -o --with-mise --no-mise --dry-run --help"
             COMPREPLY=($(compgen -W "${create_opts}" -- "${cur}"))
             ;;
         config)

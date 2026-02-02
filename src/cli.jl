@@ -68,13 +68,24 @@ function create_argument_parser()::ArgParseSettings
         "--output-dir", "-o"
             help = "Output directory for the package"
             default = pwd()
-        "--with-mise"
-            action = :store_true
-            help = "Generate mise configuration file"
         "--dry-run"
             action = :store_true
             help = "Show what would be done without executing"
     end
+
+    # Mutually exclusive mise options
+    add_arg_group!(s["create"], "mise options", exclusive=true)
+    @add_arg_table! s["create"] begin
+        "--with-mise"
+            action = :store_true
+            help = "Generate mise configuration file"
+        "--no-mise"
+            action = :store_true
+            help = "Disable mise configuration file generation"
+    end
+
+    # Reset to default group for plugin options added later
+    set_default_arg_group!(s["create"])
 
     # Options for config subcommand
     @add_arg_table! s["config"] begin
